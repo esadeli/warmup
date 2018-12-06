@@ -19,10 +19,12 @@ db.once('open', ()=> {
     console.log('Connected to database')
 })
 
+const CatLoverRouter = require('./routes/CatLoverRoutes')
 const app = express()
 
 app.use(express.urlencoded({extended: false}))
 app.use(express.json())
+app.use('/catlover', CatLoverRouter)
 
 app.get('/',(req,res)=> { res.status(200).json({ msg: 'Server 2 OK'})})
 app.listen (process.env.PORT || 3000, () => { console.log(`Listening to PORT ${process.env.PORT}`)})
