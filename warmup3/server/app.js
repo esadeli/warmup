@@ -21,14 +21,14 @@ db.once('open', ()=> {
 })
 
 // router 
-const UserRouter = require('./routes/UserRoutes')
+const IndexRouter = require('./routes/IndexRoutes')
 
 const app = express()
 
 app.use(express.urlencoded({extended: false}))
 app.use(express.json())
-app.use('/user', UserRouter)
+app.use('/', IndexRouter)
 
-app.get('/', (req,res)=> { res.status(200).json({msg: 'OK'})})
+app.get('/', (req,res)=> { res.status(200).json({msg: 'Server 1 OK'})})
 
 app.listen(process.env.PORT || 3000, ()=> {console.log(`Listening to PORT ${process.env.PORT}`)})
