@@ -8,13 +8,21 @@ const CatLoverSchema = new Schema({
     type: String,
     required: [true, 'Name should not be empty']
   }, 
-  imageurl: {
+  avatar: {
     type: String,
-    required: [true,'Image url should not be empty']
+    required: [true,'Avatar should not be empty']
   },
-  petname: {
+  address: {
     type: String,
-    required: [true, 'Pet name should not be empty']
+    required: [true, 'Address should not be empty']
+  },
+  city: {
+    type: String,
+    required: [true, 'City should not be empty']
+  },
+  zip: {
+    type: String,
+    required: [true, 'Zip should not be empty']
   }
 }, {
   timestamps: true
