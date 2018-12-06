@@ -2,25 +2,22 @@
 
 const bcrypt = require('bcrypt')
 
-function hashPassword(input){
+function hashPassword(input, cb){
   bcrypt.genSalt(10, (err,salt)=> {
     if(!err) {
-      bcrypt.hash(input,salt,(err, hash)=> {
-        if(!err) {
-          // console.log('hash----', hash)
-          return hash
+      bcrypt.hash(input,salt,(error, hash)=> {
+        if(!error) {
+          cb(hash,null)
         } else {
           console.log('error generate hash password-', err)  
+          cb(null,error)
         }
       })
     } else {
       console.log('error generate bcrypt salt-', err)
+      cb(null,err)
     }
   })
-  return ''
 }
-
-// testing
-console.log(hashPassword('yes'))
 
 module.exports = hashPassword

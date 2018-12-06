@@ -19,10 +19,15 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', ()=> {
     console.log('Connected to database')
 })
+
+// router 
+const UserRouter = require('./routes/UserRoutes')
+
 const app = express()
 
 app.use(express.urlencoded({extended: false}))
 app.use(express.json())
+app.use('/user', UserRouter)
 
 app.get('/', (req,res)=> { res.status(200).json({msg: 'OK'})})
 
