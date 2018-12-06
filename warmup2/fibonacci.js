@@ -17,5 +17,6 @@ function fibbonaci(input) {
 
 // testing 
 console.log(fibbonaci(2)) // 1
+console.log(fibbonaci(3)) // 1
 console.log(fibbonaci(5)) // 3
 console.log(fibbonaci(9)) // 21
