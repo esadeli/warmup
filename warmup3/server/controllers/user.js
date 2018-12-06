@@ -25,7 +25,7 @@ module.exports = {
             })
           } else {
             res.status(500).json({
-              msg: 'Error get token',
+              msg: 'Error Register get token',
               err: err
             })
           }
@@ -44,7 +44,6 @@ module.exports = {
       email: req.body.email
     })
       .then(user => {
-        console.log('user login ----', user)
         // check if password and hash is verified
         if(bcrypt.compareSync(req.body.password, user.password)){
           // get the jwt token
@@ -53,7 +52,22 @@ module.exports = {
             name: user.name,
             email: user.email
           }, process.env.SECRET_TOKEN, (err,token)=> {
-            
+            if(!err) {
+              res.status(201).json({
+                msg: 'Login Success',
+                token: token
+              })
+            } else {
+              res.status(500).json({
+                msg: 'Error Login get token',
+                err: err
+              })
+            }
+          })
+        } else {
+          res.status(400).json({
+            msg: 'ERROR Login verified password',
+            err: 'User is not found, please check your email and password'
           })
         }
       })
