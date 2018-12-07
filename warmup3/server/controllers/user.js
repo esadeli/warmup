@@ -3,7 +3,6 @@
 const User = require('../models/user')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
-// const hashPassword = require('../helpers/hashPassword')
 
 module.exports = {
   register: function(req,res) {
