@@ -76,5 +76,22 @@ module.exports = {
           err: error
         })
       })
+  },
+  getcredentials: function(req,res) {
+    User.findOne({
+      _id: req.body.userid
+    })
+      .then(user => {
+        res.status(200).json({
+          msg: `Basic data of ${user.name}`,
+          data: user
+        })
+      })
+      .catch(err => {
+        res.status(500).json({
+          msg: 'Error get basic data',
+          err: err
+        })
+      })
   }
 }
