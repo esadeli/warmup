@@ -1,6 +1,8 @@
 'use strict'
 
 const axios = require('axios')
+const redis = require('redis'),
+      client = redis.createClient()
 
 module.exports = {
   add: function (req,res) {
@@ -27,19 +29,34 @@ module.exports = {
       })
   },
   list: function (req,res) {
-    axios({
-      method: 'GET',
-      url: 'http://localhost:5021/user/list',
-      headers: {
-        serverkey: process.env.SERVERKEY
+    // check if cache exist
+    client.get('listcatlover', function(err,reply){
+      if(reply) {
+        let data = JSON.parse(reply)
+        res.status(201).json(data)
+      } else if(reply === null){
+        axios({
+          method: 'GET',
+          url: 'http://localhost:5021/user/list',
+          headers: {
+            serverkey: process.env.SERVERKEY
+          }
+        })
+          .then(user => {
+            // we're goint to cache the data
+            client.set('listcatlover', JSON.stringify(user.data), 'EX', 5)
+            res.status(201).json(user.data)
+          })
+          .catch(err => {
+            res.status(500).json(err.response.data)
+          })
+      } else if (err) {
+        res.status(500).json({
+          msg: 'ERROR Cache data',
+          err: err
+        })
       }
     })
-      .then(user => {
-        res.status(201).json(user.data)
-      })
-      .catch(err => {
-        res.status(500).json(err.response.data)
-      })
   },
   get: function (req,res) {
     axios({
